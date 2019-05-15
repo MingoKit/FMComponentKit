@@ -51,6 +51,8 @@
     UIImagePickerController *ipc = [[UIImagePickerController alloc] init];
     ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
     ipc.delegate = self;
+    ipc.navigationBar.translucent = NO;//去除毛玻璃效果
+
     [[self fm_getCurrentViewController] presentViewController:ipc animated:YES completion:nil];
 }
 
@@ -66,6 +68,8 @@
     UIImagePickerController *ipc = [[UIImagePickerController alloc] init];
     ipc.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     ipc.delegate = self;
+    ipc.navigationBar.translucent = NO;//去除毛玻璃效果
+
     [[self fm_getCurrentViewController] presentViewController:ipc animated:YES completion:nil];
     
 }

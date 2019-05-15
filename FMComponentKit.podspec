@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.license      = 'MIT'          # 开源证书
   s.summary      = 'A set of useful components for UIKit.' # 项目简介
   s.homepage     = 'https://github.com/yfming93/FMComponentKit' # 你的主页
-  s.source       = { :git => 'git@github.com:yfming93/FMComponentKit.git', :tag => s.version}#你的仓库地址，不能用SSH地址
+  s.source       = { :git => 'https://github.com/yfming93/FMComponentKit.git', :tag => s.version}#你的仓库地址，不能用SSH地址
   s.source_files = 'FMComponentKit/**/*.{c,h,hh,m,mm}' # 你代码的位置， BYPhoneNumTF/*.{h,m} 表示 BYPhoneNumTF 文件夹下所有的.h和.m文件
   s.resources    = 'FMComponentKit/**/*.png'
   s.requires_arc = true # 是否启用ARC
