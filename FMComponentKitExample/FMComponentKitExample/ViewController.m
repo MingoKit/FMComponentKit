@@ -7,6 +7,7 @@
 //
 
 #import "ViewController.h"
+#import <FMComponentKit/FMTextLoopView.h>
 
 @interface ViewController ()
 
