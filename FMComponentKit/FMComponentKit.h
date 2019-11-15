@@ -10,11 +10,13 @@
 #import <FMComponentKit/FMImagePicker.h>
 #import <FMComponentKit/FMTextLoopView.h>
 #import <FMComponentKit/FMAlphaTouchView.h>
+#import <FMComponentKit/FMAnimationPopView.h>
 
 #else
 
 #import "FMImagePicker.h"
 #import "FMTextLoopView.h"
 #import "FMAlphaTouchView.h"
+#import "FMAnimationPopView.h"
 
 #endif

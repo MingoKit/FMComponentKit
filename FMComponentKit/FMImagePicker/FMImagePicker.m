@@ -11,11 +11,10 @@
 @interface FMImagePicker ()<UIImagePickerControllerDelegate,UINavigationControllerDelegate>{
     
 }
-/** <#注释#>*/
+/** 图片选择器*/
 @property (nonatomic, copy) FMImagePickerBlock imagePicker;
 @property (nonatomic, assign) CGFloat scale;
 @end
-
 
 @implementation FMImagePicker
 
@@ -24,10 +23,10 @@
     self.scale = scale;
     UIAlertController *actionSheet = [UIAlertController alertControllerWithTitle:title message:nil preferredStyle:style];
     UIAlertAction *action1 = [UIAlertAction actionWithTitle:@"从相册选择" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self openAlbum];
+        [self fm_openAlbum];
     }];
     UIAlertAction *action2 = [UIAlertAction actionWithTitle:@"拍照" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-        [self openCamera];
+        [self fm_openCamera];
     }];
     UIAlertAction *action3 = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         NSLog(@"点击了取消");
@@ -40,78 +39,63 @@
 
 }
 
-
 /**
  *  打开照相机
  */
-- (void)openCamera
+- (void)fm_openCamera
 {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) return;
-    
     UIImagePickerController *ipc = [[UIImagePickerController alloc] init];
     ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
     ipc.delegate = self;
     ipc.navigationBar.translucent = NO;//去除毛玻璃效果
-
-    [[self fm_getCurrentViewController] presentViewController:ipc animated:YES completion:nil];
+    ipc.modalPresentationStyle = UIModalPresentationFullScreen;
+    [self fm_getCurrentViewController].modalPresentationStyle = UIModalPresentationFullScreen;
+    [self fm_getCurrentViewController].navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    [[self fm_getCurrentViewController].navigationController presentViewController:ipc animated:YES completion:nil];
 }
 
-/**
- *  打开相册
- */
-- (void)openAlbum
-{
-    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary]) {
-        return;
-    }
+/** 打开相册 */
+- (void)fm_openAlbum {
+    if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypePhotoLibrary])  return;
     
     UIImagePickerController *ipc = [[UIImagePickerController alloc] init];
     ipc.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     ipc.delegate = self;
-    ipc.navigationBar.translucent = NO;//去除毛玻璃效果
+    ipc.modalPresentationStyle = UIModalPresentationFullScreen;
+    if (@available(iOS 11, *)) {
+        UIScrollView.appearance.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentAutomatic;
+    }
+    [[self fm_getCurrentViewController] presentViewController:ipc animated:YES completion:^{
 
-    [[self fm_getCurrentViewController] presentViewController:ipc animated:YES completion:nil];
+    }];
     
 }
 
 #pragma mark - UIImagePickerControllerDelegate
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
      __weak __typeof(self)weakSelf = self;
     [picker dismissViewControllerAnimated:YES completion:^{
         // 1.取出选中的图片
         UIImage *image = info[UIImagePickerControllerOriginalImage];
         if (self.imagePicker) {
-            self.imagePicker([weakSelf scaleImage:image toScale:self.scale]);
+            self.imagePicker([weakSelf fm_scaleImage:image toScale:self.scale]);
         }
-//        [ fm_kurl_hzUpdateImage:image];
-        //        image = [image resizeImageWithSize:CGSizeZero];
-        // 2.添加图片到相册中
-        //        weakSelf.lookPic.image = image;
-        //        [self addRemoveImageButton];
     }];
 }
-
 
 -(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker{
     [picker dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - 私有方法
-
-- (UIImage *)scaleImage:(UIImage *)scaleImage toScale:(float)scaleSize{
-    
+- (UIImage *)fm_scaleImage:(UIImage *)scaleImage toScale:(float)scaleSize{
     CGFloat sizeWith = scaleImage.size.width * scaleSize;
     CGFloat sizeHeight = scaleImage.size.height * scaleSize;
-    
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(sizeWith, sizeHeight), NO, 0.0);
-    
     [scaleImage drawInRect:CGRectMake(0, 0, sizeWith, sizeHeight)];
-    
     UIImage *newImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
     return newImage;
 }
 

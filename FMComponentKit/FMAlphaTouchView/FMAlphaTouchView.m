@@ -72,6 +72,7 @@
 -(void)fm_touchClick{
     __weak typeof(self)weakSelf = self;
     if (self.touchFinish) {
+        [self endEditing:YES];
         self.touchFinish(YES,weakSelf);
     }
 }
