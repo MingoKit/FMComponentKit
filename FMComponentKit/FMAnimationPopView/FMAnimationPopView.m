@@ -103,7 +103,7 @@
 
 - (void)pop
 {
-    [[UIApplication sharedApplication].keyWindow.rootViewController.preferredFocusedView addSubview:self];
+     [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self];
     __weak typeof(self) ws = self;
     NSTimeInterval defaultDuration = [self getPopDefaultDuration:self.animationPopStyle];
     NSTimeInterval duration = (_popAnimationDuration < 0.0f) ? defaultDuration : _popAnimationDuration;
