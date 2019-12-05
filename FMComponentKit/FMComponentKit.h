@@ -11,6 +11,7 @@
 #import <FMComponentKit/FMTextLoopView.h>
 #import <FMComponentKit/FMAlphaTouchView.h>
 #import <FMComponentKit/FMAnimationPopView.h>
+#import <FMComponentKit/FMAssistiveTouchManager.h>
 
 #else
 
@@ -18,5 +19,7 @@
 #import "FMTextLoopView.h"
 #import "FMAlphaTouchView.h"
 #import "FMAnimationPopView.h"
+#import "FMAssistiveTouchManager.h"
+
 
 #endif
