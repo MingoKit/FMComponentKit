@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSTimer *myTimer;
 @property (nonatomic, strong) UIColor *textColor;
 @property (nonatomic, strong) UIFont *font;
+@property (nonatomic, strong) UIView *line;
 @property (nonatomic, assign) NSInteger currentRowIndex;
 @property (nonatomic, copy) selectTextBlock selectBlock;
 
@@ -35,7 +36,9 @@
 
 
 -(void)setDataSource:(NSMutableArray *)dataSource {
-    if (dataSource == nil) return;
+    if (dataSource == nil) {
+        _dataSource =  @[@"----",@"----"].mutableCopy;
+    }
     if (self.tableView) {
         _dataSource = dataSource;
         if (dataSource.count == 1) { /// 如果只有一个数据。就主动加一个同样的数据用于滚动替换。
@@ -69,8 +72,8 @@
         if (self.font)   lbl.font = self.font;
         [cell.contentView addSubview:lbl];
     }
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.backgroundColor = UIColor.clearColor;
-
     UILabel *lbl = (UILabel *)[cell.contentView viewWithTag:1111];
     [lbl setText:_dataSource[indexPath.row]];
     return cell;
@@ -78,7 +81,7 @@
 
 #pragma mark - tableViewDelegate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
     if (_selectBlock) {
         self.selectBlock(_dataSource[indexPath.row], indexPath.row);
     }
@@ -100,7 +103,6 @@
 #pragma mark - priviate method
 - (void)setInterval:(NSTimeInterval)interval {
     _interval = interval;
-    
     // 定时器
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:interval target:self selector:@selector(timer) userInfo:nil repeats:YES];
     _myTimer = timer;
@@ -118,23 +120,36 @@
         }else{
             talbeRec = CGRectMake(0, 0, frame.size.width, frame.size.height);
         }
-        // tableView
         UITableView *tableView = [[UITableView alloc] initWithFrame:talbeRec];
-        _tableView = tableView;
         tableView.dataSource = self;
         tableView.delegate = self;
         tableView.rowHeight = frame.size.height;
         tableView.backgroundColor = UIColor.clearColor;
-
         tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+        tableView.scrollEnabled = NO;
         [self addSubview:tableView];
+        _tableView = tableView;
+
         if (bgColor) {
             self.backgroundColor = bgColor;
         }
         self.textColor = textColor;
         self.font = font;
+        [self fm_bottomLine];
     }
     return self;
+}
+
+-(void)setHidenBotttomLine:(BOOL)hidenBotttomLine {
+    _hidenBotttomLine = hidenBotttomLine;
+    self.line.hidden = hidenBotttomLine;
+}
+- (void)fm_bottomLine {
+    UIView *line = [[UIView alloc] init];
+    line.frame = CGRectMake(0, self.frame.size.height - 1, self.frame.size.width, 1);
+    line.backgroundColor = [UIColor colorWithRed:231/255.0 green:231/255.0 blue:231/255.0 alpha:1.0];
+    self.line = line;
+    [self addSubview:line];
 }
 
 - (void)timer {

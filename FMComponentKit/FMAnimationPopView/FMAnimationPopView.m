@@ -29,8 +29,7 @@
 
 - (nullable instancetype)initWithCustomView:(UIView *_Nonnull)customView
                                    popStyle:(FMAnimationPopStyle)popStyle
-                               dismissStyle:(FMAnimationDismissStyle)dismissStyle
-{
+                               dismissStyle:(FMAnimationDismissStyle)dismissStyle {
     // 检测自定义视图是否存在(check customView is exist)
     if (!customView) {
         return nil;
@@ -70,8 +69,7 @@
     return self;
 }
 
-- (void)setIsObserverOrientationChange:(BOOL)isObserverOrientationChange
-{
+- (void)setIsObserverOrientationChange:(BOOL)isObserverOrientationChange {
     _isObserverOrientationChange = isObserverOrientationChange;
     
     if (_isObserverOrientationChange) {
@@ -79,30 +77,26 @@
     }
 }
 
-- (void)setPopBGAlpha:(CGFloat)popBGAlpha
-{
+- (void)setPopBGAlpha:(CGFloat)popBGAlpha {
     _popBGAlpha = (popBGAlpha <= 0.0f) ? 0.0f : ((popBGAlpha > 1.0) ? 1.0 : popBGAlpha);
     _isTransparent = (_popBGAlpha == 0.0f);
 }
 
 #pragma mark 点击背景(Click background)
-- (void)tapBGLayer:(UITapGestureRecognizer *)tap
-{
+- (void)tapBGLayer:(UITapGestureRecognizer *)tap {
     if (_isClickBGDismiss) {
         [self dismiss];
     }
 }
 
 #pragma mark UIGestureRecognizer Delegate
-- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
-{
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
     CGPoint location = [touch locationInView:_contentView];
     location = [_customView.layer convertPoint:location fromLayer:_contentView.layer];
     return ![_customView.layer containsPoint:location];
 }
 
-- (void)pop
-{
+- (void)pop {
      [[UIApplication sharedApplication].keyWindow.rootViewController.view addSubview:self];
     __weak typeof(self) ws = self;
     NSTimeInterval defaultDuration = [self getPopDefaultDuration:self.animationPopStyle];
@@ -139,8 +133,7 @@
     });
 }
 
-- (void)dismiss
-{
+- (void)dismiss {
     __weak typeof(self) ws = self;
     NSTimeInterval defaultDuration = [self getDismissDefaultDuration:self.animationDismissStyle];
     NSTimeInterval duration = (_dismissAnimationDuration < 0.0f) ? defaultDuration : _dismissAnimationDuration;
@@ -173,8 +166,7 @@
     self.frame = CGRectZero;
 }
 
-- (void)hanlePopAnimationWithDuration:(NSTimeInterval)duration
-{
+- (void)hanlePopAnimationWithDuration:(NSTimeInterval)duration {
     __weak typeof(self) ws = self;
     switch (self.animationPopStyle) {
         case FMAnimationPopStyleScale:
@@ -238,8 +230,7 @@
     }
 }
 
-- (void)hanleDismissAnimationWithDuration:(NSTimeInterval)duration
-{
+- (void)hanleDismissAnimationWithDuration:(NSTimeInterval)duration {
     __weak typeof(self) ws = self;
     switch (self.animationDismissStyle) {
         case FMAnimationDismissStyleScale:
@@ -306,8 +297,7 @@
     }
 }
 
-- (NSTimeInterval)getPopDefaultDuration:(FMAnimationPopStyle)animationPopStyle
-{
+- (NSTimeInterval)getPopDefaultDuration:(FMAnimationPopStyle)animationPopStyle {
     NSTimeInterval defaultDuration = 0.0f;
     if (animationPopStyle == FMAnimationPopStyleNO) {
         defaultDuration = 0.2f;
@@ -324,8 +314,7 @@
     return defaultDuration;
 }
 
-- (NSTimeInterval)getDismissDefaultDuration:(FMAnimationDismissStyle)animationDismissStyle
-{
+- (NSTimeInterval)getDismissDefaultDuration:(FMAnimationDismissStyle)animationDismissStyle {
     NSTimeInterval defaultDuration = 0.0f;
     if (animationDismissStyle == FMAnimationDismissStyleNO) {
         defaultDuration = 0.2f;
@@ -343,8 +332,7 @@
     return defaultDuration;
 }
 
-- (void)animationWithLayer:(CALayer *)layer duration:(CGFloat)duration values:(NSArray *)values
-{
+- (void)animationWithLayer:(CALayer *)layer duration:(CGFloat)duration values:(NSArray *)values {
     CAKeyframeAnimation *KFAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
     KFAnimation.duration = duration;
     KFAnimation.removedOnCompletion = NO;
@@ -362,8 +350,7 @@
 }
 
 #pragma mark 监听横竖屏方向改变
-- (void)statusBarOrientationChange:(NSNotification *)notification
-{
+- (void)statusBarOrientationChange:(NSNotification *)notification {
     CGRect startCustomViewRect = self.customView.frame;
     self.frame = CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height);
     self.backgroundView.frame = self.bounds;

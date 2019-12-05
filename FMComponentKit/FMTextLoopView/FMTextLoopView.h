@@ -26,4 +26,7 @@ typedef void(^selectTextBlock)(NSString *selectString, NSInteger index);
 + (instancetype)fm_initWithFrame:(CGRect)frame leftImageName:(NSString *)leftImageName dataSource:(NSArray *)dataSource loopInterval:(NSTimeInterval)timeInterval textColor:(UIColor *)textColor font:(UIFont *)font bgColor:(UIColor *)bgColor selectBlock:(selectTextBlock)selectBlock;
 /** 更新数据源*/
 @property (nonatomic, strong) NSMutableArray *dataSource;
+/// 隐藏底部小细线
+@property (nonatomic, assign) BOOL hidenBotttomLine;
+
 @end

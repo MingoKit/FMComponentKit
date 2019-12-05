@@ -42,8 +42,7 @@
 /**
  *  打开照相机
  */
-- (void)fm_openCamera
-{
+- (void)fm_openCamera {
     if (![UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) return;
     UIImagePickerController *ipc = [[UIImagePickerController alloc] init];
     ipc.sourceType = UIImagePickerControllerSourceTypeCamera;
