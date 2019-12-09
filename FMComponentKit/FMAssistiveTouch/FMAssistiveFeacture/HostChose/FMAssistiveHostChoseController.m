@@ -25,6 +25,7 @@ static NSString *myTableViewCellID = @"FMHostChoseCell";
 @property (weak, nonatomic) IBOutlet UILabel *lab_bid;
 @property (weak, nonatomic) IBOutlet UILabel *lab_version;
 @property (weak, nonatomic) IBOutlet UILabel *lab_tip;
+@property (unsafe_unretained, nonatomic) IBOutlet UILabel *lab_environment;
 
 @end
 
@@ -37,6 +38,13 @@ static NSString *myTableViewCellID = @"FMHostChoseCell";
      [ _btn_add addTarget:self action:@selector(fm_addHost) forControlEvents:UIControlEventTouchUpInside];
     _lab_bid.text = kFMAssistiveBid;
     _lab_version.text = kFMAssistiveVersion;
+    
+#ifdef DEBUG
+    _lab_environment.text = @"Debug 电脑直装版本";
+
+#else
+    _lab_environment.text = @"Release 发布版本";
+#endif
 }
 
 - (void)fm_addHost {

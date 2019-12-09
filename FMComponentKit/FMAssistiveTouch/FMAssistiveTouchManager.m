@@ -84,9 +84,24 @@ static FMAssistiveTouchManager *_instance;
 }
 
 -(NSString *)kRqusetLog {
-    _kRqusetLog = [self.arrRequest description];
+    _kRqusetLog = [self.arrRequest debugDescription] ;
+
     return _kRqusetLog;
 }
+
+//用po打印调试信息时会调用该方法
+- (NSString *)debugDescription{
+    NSError *error = nil;
+    //字典转成json
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:self.arrRequest options:NSJSONWritingPrettyPrinted  error:&error];
+    //如果报错了就按原先的格式输出
+    if (error) {
+        return [super debugDescription];
+    }
+    NSString *jsonString = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return jsonString;
+}
+
 
 -(NSString *)kMainHost {
     NSUserDefaults *userDefaults=[NSUserDefaults standardUserDefaults];
