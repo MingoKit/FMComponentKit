@@ -12,6 +12,7 @@
 #import <FMComponentKit/FMAlphaTouchView.h>
 #import <FMComponentKit/FMAnimationPopView.h>
 #import <FMComponentKit/FMAssistiveTouchManager.h>
+#import <FMComponentKit/FMDateFormat.h>
 
 #else
 
@@ -20,6 +21,7 @@
 #import "FMAlphaTouchView.h"
 #import "FMAnimationPopView.h"
 #import "FMAssistiveTouchManager.h"
+#import "FMDateFormat.h"
 
 
 #endif
