@@ -79,6 +79,51 @@
     NSDate *date = [NSDate fm_dateWithDateString:self];
     return [NSString stringWithFormat:@"%02ld:%02ld",date.minute,date.seconds];
 }
+-(NSString *)fm_format_hh_mm_MM_dd
+{
+    NSDate *date = [NSDate fm_dateWithDateString:self];
+    return [NSString stringWithFormat:@"%02ld:%02ld %02ld/%02ld",date.hour,date.minute,date.month,date.day];
+}
+
+-(NSInteger)year
+{
+    NSDate *components = [NSDate fm_dateWithDateString:self];
+    return components.year;
+}
+- (NSInteger) month
+{
+    NSDate *components = [NSDate fm_dateWithDateString:self];
+    return components.month;
+}
+
+- (NSInteger) day
+{
+    NSDate *components = [NSDate fm_dateWithDateString:self];
+    return components.day;
+}
+
+- (NSInteger) hour
+{
+    NSDate *components = [NSDate fm_dateWithDateString:self];
+    return components.hour;
+}
+
+- (NSInteger) minute
+{
+    NSDate *components = [NSDate fm_dateWithDateString:self];
+    return components.minute;
+}
+
+- (NSInteger) seconds
+{
+    NSDate *components = [NSDate fm_dateWithDateString:self];
+    return components.seconds;
+}
+
+- (NSString *) weekday
+{
+    return self.fm_formatWeekDay;
+}
 
 -(NSString *)fm_formatWeekDay
 {
@@ -111,4 +156,5 @@
     }
     return weekStr;
 }
+
 @end

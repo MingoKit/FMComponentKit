@@ -82,7 +82,17 @@
  */
 @property(nonatomic,copy,readonly)NSString *fm_format_mm_ss;
 
+/// HH:mm MM/dd
+@property(nonatomic,copy,readonly)NSString *fm_format_hh_mm_MM_dd;
+//@property(nonatomic,copy,readonly)NSString *fm_formatWeekDay;
+
+@property(nonatomic,assign,readonly)NSInteger year;
+@property(nonatomic,assign,readonly)NSInteger month;
+@property(nonatomic,assign,readonly)NSInteger day;
+@property(nonatomic,assign,readonly)NSInteger hour;
+@property(nonatomic,assign,readonly)NSInteger minute;
+@property(nonatomic,assign,readonly)NSInteger seconds;
 #pragma mark - 转换为星期几
-@property(nonatomic,copy,readonly)NSString *fm_formatWeekDay;
+@property (nonatomic,copy,readonly)NSString *weekday;
 
 @end

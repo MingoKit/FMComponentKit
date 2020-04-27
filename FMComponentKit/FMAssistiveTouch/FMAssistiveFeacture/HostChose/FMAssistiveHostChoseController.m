@@ -133,7 +133,7 @@ static NSString *myTableViewCellID = @"FMHostChoseCell";
 
 //-(UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
 //    UIView *back = UIView.new;
-//    back.backgroundColor = kGreyColor;
+//    back.backgroundColor = kHexColor(#EEEEEE);
 //    return back;
 //
 //}
